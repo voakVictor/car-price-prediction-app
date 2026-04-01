@@ -15,12 +15,12 @@ st.set_page_config(
 # --------------------------------------------------------
 #  DARK BACKGROUND IMAGE
 # --------------------------------------------------------
-def add_bg_from_url():
+def set_background_image():
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("https://www.vecteezy.com/photo/35827942-ai-generated-the-car-in-water-splashing");
+            background-image: url("https://static.vecteezy.com/system/resources/thumbnails/036/498/601/large_2x/ai-generated-the-car-in-water-splashing-free-photo.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -31,7 +31,7 @@ def add_bg_from_url():
         unsafe_allow_html=True
     )
 
-add_bg_from_url()
+set_background_image()
 
 # --------------------------------------------------------
 #  CUSTOM CSS FOR HIGH VISIBILITY
@@ -58,9 +58,9 @@ st.markdown("""
             text-shadow: 2px 2px 6px rgba(0,0,0,1);
         }
 
-        /* ---- Glass Card (form section) ---- */
+        /* ---- Glass Card ---- */
         .card {
-            background: rgba(0, 0, 0, 0.55);   /* darker for strong contrast */
+            background: rgba(0, 0, 0, 0.55);
             padding: 30px;
             border-radius: 18px;
             box-shadow: 0px 8px 30px rgba(0,0,0,0.9);
@@ -78,7 +78,7 @@ st.markdown("""
 
         /* ---- Input Fields ---- */
         .stNumberInput input {
-            background-color: rgba(255, 255, 255, 0.15) !important;
+            background-color: rgba(255, 255, 255, 0.18) !important;
             color: #ffffff !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255,255,255,0.4) !important;
@@ -87,13 +87,13 @@ st.markdown("""
 
         /* ---- Selectbox ---- */
         .stSelectbox div[data-baseweb="select"] {
-            background-color: rgba(255, 255, 255, 0.15) !important;
+            background-color: rgba(255, 255, 255, 0.18) !important;
             color: white !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255,255,255,0.4) !important;
         }
 
-        /* Dropdown Menu */
+        /* ---- Dropdown Options ---- */
         .stSelectbox div[role="listbox"] {
             background-color: rgba(20,20,20,0.95) !important;
             color: white !important;
@@ -128,7 +128,7 @@ MODEL_PATH = "car_price_model.pkl"
 SCALER_PATH = "scaler.pkl"
 
 if not os.path.exists(MODEL_PATH):
-    st.error("❌ Model file not found. Ensure 'car_price_model.pkl' is in the folder.")
+    st.error("❌ Model file not found. Ensure 'car_price_model.pkl' exists.")
     st.stop()
 
 model = pickle.load(open(MODEL_PATH, "rb"))
@@ -140,7 +140,7 @@ else:
     st.warning("⚠️ Scaler not found — predictions may be less accurate.")
 
 # --------------------------------------------------------
-#  INPUT FORM (INSIDE DARK GLASS CARD)
+#  INPUT FORM
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
@@ -173,7 +173,7 @@ if scaler is not None:
         st.stop()
 
 # --------------------------------------------------------
-#  PREDICTION BUTTON
+#  PREDICTION SECTION
 # --------------------------------------------------------
 if st.button("Predict Price ☑️"):
     try:
@@ -193,6 +193,6 @@ if st.button("Predict Price ☑️"):
 st.markdown("""
     <hr>
     <div style='text-align:center; color:white; font-size:16px; text-shadow: 2px 2px 5px black;'>
-        <strong>Victor Kwabena Opare‑Addo</strong> 
+        Built by <strong>Victor Kwabena Opare‑Addo</strong> • Powered by Streamlit 🚀
     </div>
 """, unsafe_allow_html=True)
