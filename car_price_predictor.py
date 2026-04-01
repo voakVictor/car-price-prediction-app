@@ -221,12 +221,11 @@ if st.button("Predict Price"):
     except Exception:
         st.error("Prediction failed.")
 
-# --------------------------------------------------------
 # FOOTER
-# --------------------------------------------------------
+
 st.markdown("""
 <hr>
 <center style='color:#94a3b8'>
-Victor Kwabena Opare-Addo • GCTU • 2026
+Victor Kwabena Opare-Addo  •  GCTU  •  @2026
 </center>
 """, unsafe_allow_html=True)
