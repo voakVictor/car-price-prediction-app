@@ -146,7 +146,7 @@ into a web interface using Streamlit.
 # --------------------------------------------------------
 # HEADER
 # --------------------------------------------------------
-st.markdown('<div class="title">🚗 Car Price Prediction System</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">Car Price Prediction System</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Machine Learning Model Integrated into a Web Application</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------------
