@@ -13,201 +13,200 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-# BACKGROUND + GLOBAL STYLES
+# CLEAN PROFESSIONAL STYLING
 # --------------------------------------------------------
 def apply_styles():
     st.markdown("""
-        <style>
+    <style>
 
-        /* --- Background Image --- */
-        .stApp {
-            background-image: url("https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+    /* --- Background --- */
+    .stApp {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: #f1f5f9;
+    }
 
-        /* --- Main container spacing --- */
-        .block-container {
-            padding-top: 2rem !important;
-            max-width: 760px !important;
-        }
+    /* --- Container --- */
+    .block-container {
+        max-width: 700px;
+        padding-top: 2rem;
+    }
 
-        /* --- Page Title --- */
-        .title {
-            font-size: 36px;
-            font-weight: 900;
-            color: white;
-            text-align: center;
-            margin-bottom: 4px;
-            text-shadow: 3px 3px 10px rgba(0,0,0,1);
-        }
+    /* --- Title --- */
+    .title {
+        font-size: 32px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 5px;
+        color: #f8fafc;
+    }
 
-        /* --- Subtitle --- */
-        .subtitle {
-            font-size: 16px;
-            color: #ececec;
-            text-align: center;
-            margin-bottom: 1.4rem;
-            text-shadow: 2px 2px 6px rgba(0,0,0,1);
-        }
+    /* --- Subtitle --- */
+    .subtitle {
+        text-align: center;
+        font-size: 15px;
+        color: #cbd5f5;
+        margin-bottom: 20px;
+    }
 
-        /* --- Prediction Card --- */
-        .top-card {
-            background: rgba(13,110,253,0.92);
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 1.4rem;
-            box-shadow: 0px 6px 25px rgba(0,0,0,0.85);
-        }
+    /* --- Card --- */
+    .card {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #334155;
+    }
 
-        /* --- Input Form Card --- */
-        .card {
-            background: rgba(0,0,0,0.55);
-            padding: 20px;
-            border-radius: 14px;
-            box-shadow: 0px 6px 25px rgba(0,0,0,0.9);
-            backdrop-filter: blur(8px);
-            margin-bottom: 1.6rem;
-        }
+    /* --- Prediction Box --- */
+    .prediction {
+        background: #0d6efd;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 20px;
+    }
 
-        /* --- Input Labels --- */
-        label {
-            font-weight: 700 !important;
-            color: white !important;
-            font-size: 16px !important;
-            text-shadow: 2px 2px 8px black !important;
-        }
+    /* --- Labels --- */
+    label {
+        font-weight: 600 !important;
+        color: #e2e8f0 !important;
+    }
 
-        /* --- Input Fields --- */
-        .stNumberInput input,
-        .stSelectbox div[data-baseweb="select"] {
-            background-color: rgba(255,255,255,0.18) !important;
-            color: white !important;
-            border-radius: 8px !important;
-            border: 1px solid rgba(255,255,255,0.35) !important;
-        }
+    /* --- Inputs --- */
+    .stNumberInput input,
+    .stSelectbox div[data-baseweb="select"] {
+        background-color: #0f172a !important;
+        color: white !important;
+        border: 1px solid #334155 !important;
+        border-radius: 6px !important;
+    }
 
-        /* --- Dropdown Menu --- */
-        .stSelectbox div[role="listbox"] {
-            background-color: rgba(15,15,15,0.95) !important;
-            color: white !important;
-        }
+    /* --- Button --- */
+    .stButton button {
+        width: 100%;
+        border-radius: 8px;
+        height: 45px;
+        font-weight: 600;
+    }
 
-        /* --- Mobile Adjustments --- */
-        @media(max-width: 600px) {
-            .title { font-size: 28px !important; }
-            .subtitle { font-size: 14px !important; }
-            .top-card { font-size: 18px !important; }
-        }
+    /* --- Responsive --- */
+    @media(max-width: 600px) {
+        .title { font-size: 26px; }
+        .prediction { font-size: 18px; }
+    }
 
-        </style>
+    </style>
     """, unsafe_allow_html=True)
 
 apply_styles()
 
 # --------------------------------------------------------
-# SIDEBAR
+# SIDEBAR (CLEAN & ACADEMIC)
 # --------------------------------------------------------
-st.sidebar.title("ℹ️ App Info")
-st.sidebar.markdown("""
-### 🚗 Car Price Prediction App
-Academic demonstration of a machine‑learning car pricing model.
+st.sidebar.title("Application Information")
+st.sidebar.write("""
+This application demonstrates the integration of a machine learning model 
+into a web interface using Streamlit.
 
-### 🔍 Features Used
+**Model:** Linear Regression  
+**Features Used:**
 - Production Year  
 - Engine Volume  
 - Mileage  
 - Leather Interior  
 - Cylinders  
 
-### 🧠 Model
-Linear Regression  
-Optional Standard Scaling
-
-### 👨‍💻 Developer
-**Victor Kwabena Opare‑Addo**
-
-### 📦 Version
-Academic Edition – Clean UI
+**Purpose:** Academic Assignment  
 """)
 
 # --------------------------------------------------------
-# MAIN HEADER
+# HEADER
 # --------------------------------------------------------
 st.markdown('<div class="title">🚗 Car Price Prediction System</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">A clean, modern & fully responsive academic interface</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Machine Learning Model Integrated into a Web Application</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------------
-# LOAD MODEL / SCALER
+# LOAD MODEL
 # --------------------------------------------------------
 MODEL_PATH = "car_price_model.pkl"
 SCALER_PATH = "scaler.pkl"
 
 if not os.path.exists(MODEL_PATH):
-    st.error("❌ Model file missing! Upload 'car_price_model.pkl'.")
+    st.error("Model file missing.")
     st.stop()
 
 model = pickle.load(open(MODEL_PATH, "rb"))
 scaler = pickle.load(open(SCALER_PATH, "rb")) if os.path.exists(SCALER_PATH) else None
 
 # --------------------------------------------------------
-# TOP PREDICTION BOX (starts empty)
+# PREDICTION DISPLAY
 # --------------------------------------------------------
-prediction_box = st.markdown(
-    '<div class="top-card">Enter car details below</div>',
+prediction_placeholder = st.empty()
+prediction_placeholder.markdown(
+    '<div class="prediction">Enter values and click Predict</div>',
     unsafe_allow_html=True
 )
 
 # --------------------------------------------------------
-# INPUT FORM
+# INPUT FORM (RESPONSIVE)
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
 with col1:
-    prod_year = st.number_input("Production Year", min_value=1900, max_value=2026, value=2015)
-    engine_volume = st.number_input("Engine Volume (Liters)", min_value=0.5, max_value=10.0, value=2.0, step=0.1)
+    prod_year = st.number_input("Production Year", 1900, 2026, 2015)
+    engine_volume = st.number_input("Engine Volume (L)", 0.5, 10.0, 2.0)
 
 with col2:
     leather = st.selectbox("Leather Interior", ["No", "Yes"])
-    mileage = st.number_input("Mileage (KM)", min_value=0, max_value=1_000_000, value=50000)
+    mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
 
-cyl = st.number_input("Number of Cylinders", min_value=1, max_value=16, value=4)
+# FULL WIDTH FOR BETTER MOBILE UX
+cyl = st.number_input("Number of Cylinders", 1, 16, 4)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------------
-# PROCESS INPUT
+# DATA PROCESSING
 # --------------------------------------------------------
 leather_val = 1 if leather == "Yes" else 0
-data = np.array([[prod_year, leather_val, engine_volume, mileage, cyl]])
+
+input_data = np.array([[
+    prod_year,
+    leather_val,
+    engine_volume,
+    mileage,
+    cyl
+]])
 
 if scaler:
-    data = scaler.transform(data)
+    input_data = scaler.transform(input_data)
 
 # --------------------------------------------------------
-# PREDICT BUTTON
+# PREDICTION
 # --------------------------------------------------------
 if st.button("Predict Price"):
-    price = float(model.predict(data)[0])
+    try:
+        prediction = float(model.predict(input_data)[0])
 
-    prediction_box.markdown(
-        f'<div class="top-card">Estimated Price: GHS {price:,.2f}</div>',
-        unsafe_allow_html=True
-    )
+        prediction_placeholder.markdown(
+            f'<div class="prediction">Estimated Price: GHS {prediction:,.2f}</div>',
+            unsafe_allow_html=True
+        )
+
+    except Exception as e:
+        st.error("Prediction failed.")
 
 # --------------------------------------------------------
 # FOOTER
 # --------------------------------------------------------
 st.markdown("""
 <hr>
-<div style='text-align:center; color:white; text-shadow:2px 2px 6px black;'>
-Academic Project • Streamlit Interface • <b>Victor Opare‑Addo</b>
-</div>
+<center style='color:#94a3b8'>
+Academic Project • Streamlit • Victor Opare-Addo
+</center>
 """, unsafe_allow_html=True)
