@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-# RESPONSIVE STYLING (IMPROVED)
+# RESPONSIVE STYLING (AUTO MOBILE DETECTION)
 # --------------------------------------------------------
 def apply_styles():
     st.markdown("""
@@ -93,17 +93,13 @@ def apply_styles():
         font-size: 16px;
     }
 
-    /* --- RESPONSIVE DESIGN --- */
-
-    /* Tablets */
-    @media (max-width: 900px) {
-        .block-container {
-            max-width: 90% !important;
+    /* --- AUTO RESPONSIVE (KEY IMPROVEMENT) --- */
+    @media (max-width: 768px) {
+        div[data-testid="column"] {
+            width: 100% !important;
+            flex: 100% !important;
         }
-    }
 
-    /* Mobile */
-    @media (max-width: 600px) {
         .title {
             font-size: 24px !important;
         }
@@ -114,11 +110,6 @@ def apply_styles():
 
         .prediction {
             font-size: 17px !important;
-            padding: 12px;
-        }
-
-        .card {
-            padding: 15px !important;
         }
     }
 
@@ -175,27 +166,19 @@ prediction_placeholder.markdown(
 )
 
 # --------------------------------------------------------
-# INPUT FORM (BETTER RESPONSIVE LOGIC)
+# INPUT FORM (AUTO RESPONSIVE)
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
-# Use responsive columns
-is_mobile = st.checkbox("📱 Use mobile layout", value=False)
+col1, col2 = st.columns(2, gap="medium")
 
-if is_mobile:
-    # STACKED layout (better for small screens)
+with col1:
     prod_year = st.number_input("Production Year", 1900, 2026, 2015)
     engine_volume = st.number_input("Engine Volume (L)", 0.5, 10.0, 2.0)
+
+with col2:
     leather = st.selectbox("Leather Interior", ["No", "Yes"])
     mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
-else:
-    col1, col2 = st.columns(2)
-    with col1:
-        prod_year = st.number_input("Production Year", 1900, 2026, 2015)
-        engine_volume = st.number_input("Engine Volume (L)", 0.5, 10.0, 2.0)
-    with col2:
-        leather = st.selectbox("Leather Interior", ["No", "Yes"])
-        mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
 
 # Full width
 cyl = st.number_input("Number of Cylinders", 1, 16, 4)
