@@ -13,17 +13,18 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-#  BACKGROUND IMAGE
+#  DARK BACKGROUND IMAGE
 # --------------------------------------------------------
 def add_bg_from_url():
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("https://images.unsplash.com/photo-1503376780353-7e6692767b70");
+            background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-position: center;
         }}
         </style>
         """,
@@ -33,7 +34,7 @@ def add_bg_from_url():
 add_bg_from_url()
 
 # --------------------------------------------------------
-#  CUSTOM CSS FOR VISIBILITY & READABILITY
+#  CUSTOM CSS FOR HIGH VISIBILITY
 # --------------------------------------------------------
 st.markdown("""
     <style>
@@ -43,70 +44,72 @@ st.markdown("""
             font-size: 42px;
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.9);
+            text-shadow: 4px 4px 10px rgba(0,0,0,1);
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         /* ---- Subtitle ---- */
         .subtitle {
             font-size: 18px;
-            color: #e6e6e6;
+            color: #e0e0e0;
             text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+            margin-bottom: 35px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,1);
         }
 
-        /* ---- Glass Card for Form ---- */
+        /* ---- Glass Card (form section) ---- */
         .card {
-            background: rgba(255, 255, 255, 0.35); /* increased opacity */
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0px 6px 28px rgba(0,0,0,0.7);
-            backdrop-filter: blur(14px);
+            background: rgba(0, 0, 0, 0.55);   /* darker for strong contrast */
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        /* ---- Input Labels ---- */
+        /* ---- Labels ---- */
         label, .stNumberInput label, .stSelectbox label {
             color: #ffffff !important;
             font-weight: 700 !important;
-            text-shadow: 2px 2px 5px rgba(0,0,0,1);
+            text-shadow: 2px 2px 8px rgba(0,0,0,1);
             font-size: 16px !important;
         }
 
         /* ---- Input Fields ---- */
         .stNumberInput input {
-            background-color: rgba(0, 0, 0, 0.65) !important;
+            background-color: rgba(255, 255, 255, 0.15) !important;
             color: #ffffff !important;
             border-radius: 8px !important;
+            border: 1px solid rgba(255,255,255,0.4) !important;
             padding: 8px !important;
         }
 
         /* ---- Selectbox ---- */
         .stSelectbox div[data-baseweb="select"] {
-            background-color: rgba(0, 0, 0, 0.65) !important;
+            background-color: rgba(255, 255, 255, 0.15) !important;
             color: white !important;
             border-radius: 8px !important;
-            padding: 6px !important;
+            border: 1px solid rgba(255,255,255,0.4) !important;
         }
 
-        /* ---- Dropdown Options ---- */
+        /* Dropdown Menu */
         .stSelectbox div[role="listbox"] {
-            background-color: rgba(30, 30, 30, 0.95) !important;
+            background-color: rgba(20,20,20,0.95) !important;
             color: white !important;
         }
 
         /* ---- Prediction Box ---- */
         .prediction-box {
-            background-color: #0069ff;
-            padding: 22px;
-            border-radius: 12px;
+            background-color: #0d6efd;
+            padding: 25px;
+            border-radius: 14px;
             text-align: center;
             font-size: 24px;
             font-weight: bold;
             color: white;
-            margin-top: 25px;
-            box-shadow: 0px 6px 25px rgba(0,0,0,0.8);
+            margin-top: 30px;
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.9);
         }
 
     </style>
@@ -134,10 +137,10 @@ scaler = None
 if os.path.exists(SCALER_PATH):
     scaler = pickle.load(open(SCALER_PATH, "rb"))
 else:
-    st.warning("⚠️ Scaler not found. Predictions may be less accurate.")
+    st.warning("⚠️ Scaler not found — predictions may be less accurate.")
 
 # --------------------------------------------------------
-#  INPUT FORM (INSIDE GLASS CARD)
+#  INPUT FORM (INSIDE DARK GLASS CARD)
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
@@ -190,6 +193,6 @@ if st.button("Predict Price ☑️"):
 st.markdown("""
     <hr>
     <div style='text-align:center; color:white; font-size:16px; text-shadow: 2px 2px 5px black;'>
-        Built by <strong>Victor Kwabena Opare‑Addo</strong> • Powered by Streamlit 🚀
+        <strong>Victor Kwabena Opare‑Addo</strong> 
     </div>
 """, unsafe_allow_html=True)
