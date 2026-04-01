@@ -4,7 +4,7 @@ import pickle
 import os
 
 # --------------------------------------------------------
-# PAGE CONFIGURATION
+# PAGE CONFIG
 # --------------------------------------------------------
 st.set_page_config(
     page_title="Car Price Prediction System",
@@ -13,22 +13,25 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-# CLEAN PROFESSIONAL STYLING
+# RESPONSIVE STYLING (IMPROVED)
 # --------------------------------------------------------
 def apply_styles():
     st.markdown("""
     <style>
 
+    /* --- Background --- */
     .stApp {
         background: linear-gradient(135deg, #0f172a, #1e293b);
         color: #f1f5f9;
     }
 
+    /* --- Container --- */
     .block-container {
-        max-width: 700px;
-        padding-top: 2rem;
+        max-width: 720px;
+        padding: 1rem;
     }
 
+    /* --- Title --- */
     .title {
         font-size: 32px;
         font-weight: 800;
@@ -37,6 +40,7 @@ def apply_styles():
         color: #f8fafc;
     }
 
+    /* --- Subtitle --- */
     .subtitle {
         text-align: center;
         font-size: 15px;
@@ -44,17 +48,19 @@ def apply_styles():
         margin-bottom: 20px;
     }
 
+    /* --- Card --- */
     .card {
         background: #1e293b;
-        padding: 20px;
+        padding: 18px;
         border-radius: 10px;
         margin-bottom: 20px;
         border: 1px solid #334155;
     }
 
+    /* --- Prediction Box --- */
     .prediction {
         background: #0d6efd;
-        padding: 15px;
+        padding: 14px;
         border-radius: 10px;
         text-align: center;
         font-size: 20px;
@@ -63,11 +69,13 @@ def apply_styles():
         margin-bottom: 20px;
     }
 
+    /* --- Labels --- */
     label {
         font-weight: 600 !important;
         color: #e2e8f0 !important;
     }
 
+    /* --- Inputs --- */
     .stNumberInput input,
     .stSelectbox div[data-baseweb="select"] {
         background-color: #0f172a !important;
@@ -76,16 +84,42 @@ def apply_styles():
         border-radius: 6px !important;
     }
 
+    /* --- Button --- */
     .stButton button {
         width: 100%;
         border-radius: 8px;
         height: 45px;
         font-weight: 600;
+        font-size: 16px;
     }
 
-    @media(max-width: 600px) {
-        .title { font-size: 26px; }
-        .prediction { font-size: 18px; }
+    /* --- RESPONSIVE DESIGN --- */
+
+    /* Tablets */
+    @media (max-width: 900px) {
+        .block-container {
+            max-width: 90% !important;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+        .title {
+            font-size: 24px !important;
+        }
+
+        .subtitle {
+            font-size: 14px !important;
+        }
+
+        .prediction {
+            font-size: 17px !important;
+            padding: 12px;
+        }
+
+        .card {
+            padding: 15px !important;
+        }
     }
 
     </style>
@@ -94,7 +128,7 @@ def apply_styles():
 apply_styles()
 
 # --------------------------------------------------------
-# SIDEBAR (ACADEMIC INFO)
+# SIDEBAR
 # --------------------------------------------------------
 st.sidebar.title("Application Information")
 st.sidebar.write("""
@@ -119,25 +153,13 @@ st.markdown('<div class="title">🚗 Car Price Prediction System</div>', unsafe_
 st.markdown('<div class="subtitle">Machine Learning Model Integrated into a Web Application</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------------
-# MODEL EXPLANATION
-# --------------------------------------------------------
-st.markdown("### 🧠 How the Model Works")
-st.info("""
-This application uses a Linear Regression model to estimate car prices.
-
-The model learns relationships between car features (year, engine size, mileage, etc.) 
-and price based on historical data. When new inputs are provided, it applies learned 
-coefficients to predict the car price.
-""")
-
-# --------------------------------------------------------
-# LOAD MODEL & SCALER
+# LOAD MODEL
 # --------------------------------------------------------
 MODEL_PATH = "car_price_model.pkl"
 SCALER_PATH = "scaler.pkl"
 
 if not os.path.exists(MODEL_PATH):
-    st.error("Model file is missing.")
+    st.error("Model file missing.")
     st.stop()
 
 model = pickle.load(open(MODEL_PATH, "rb"))
@@ -153,35 +175,32 @@ prediction_placeholder.markdown(
 )
 
 # --------------------------------------------------------
-# INPUT FORM
+# INPUT FORM (BETTER RESPONSIVE LOGIC)
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
+# Use responsive columns
+is_mobile = st.checkbox("📱 Use mobile layout", value=False)
 
-with col1:
+if is_mobile:
+    # STACKED layout (better for small screens)
     prod_year = st.number_input("Production Year", 1900, 2026, 2015)
     engine_volume = st.number_input("Engine Volume (L)", 0.5, 10.0, 2.0)
-
-with col2:
     leather = st.selectbox("Leather Interior", ["No", "Yes"])
     mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
+else:
+    col1, col2 = st.columns(2)
+    with col1:
+        prod_year = st.number_input("Production Year", 1900, 2026, 2015)
+        engine_volume = st.number_input("Engine Volume (L)", 0.5, 10.0, 2.0)
+    with col2:
+        leather = st.selectbox("Leather Interior", ["No", "Yes"])
+        mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
 
+# Full width
 cyl = st.number_input("Number of Cylinders", 1, 16, 4)
 
 st.markdown('</div>', unsafe_allow_html=True)
-
-# --------------------------------------------------------
-# INPUT SUMMARY
-# --------------------------------------------------------
-st.markdown("### 📋 Input Summary")
-st.write({
-    "Production Year": prod_year,
-    "Engine Volume": engine_volume,
-    "Mileage": mileage,
-    "Cylinders": cyl,
-    "Leather Interior": leather
-})
 
 # --------------------------------------------------------
 # DATA PROCESSING
@@ -211,22 +230,8 @@ if st.button("Predict Price"):
             unsafe_allow_html=True
         )
 
-        # Insight
-        if prediction > 500000:
-            st.info("This appears to be a high-value vehicle.")
-        else:
-            st.info("This appears to be a moderately priced vehicle.")
-
-    except Exception as e:
+    except Exception:
         st.error("Prediction failed.")
-
-# --------------------------------------------------------
-# DISCLAIMER
-# --------------------------------------------------------
-st.warning("""
-This prediction is based on a machine learning model trained on historical data. 
-Actual market prices may vary due to external economic and market factors.
-""")
 
 # --------------------------------------------------------
 # FOOTER
