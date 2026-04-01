@@ -13,22 +13,24 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-# RESPONSIVE STYLING (AUTO MOBILE DETECTION)
+# RESPONSIVE + SPACING FIX (CRITICAL FIX INCLUDED)
 # --------------------------------------------------------
 def apply_styles():
     st.markdown("""
     <style>
 
+    /* --- Fix Streamlit Header Overlap --- */
+    .block-container {
+        max-width: 720px;
+        padding-top: 5rem !important;  /* 🔥 FIXED HERE */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
     /* --- Background --- */
     .stApp {
         background: linear-gradient(135deg, #0f172a, #1e293b);
         color: #f1f5f9;
-    }
-
-    /* --- Container --- */
-    .block-container {
-        max-width: 720px;
-        padding: 1rem;
     }
 
     /* --- Title --- */
@@ -45,7 +47,7 @@ def apply_styles():
         text-align: center;
         font-size: 15px;
         color: #cbd5f5;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     /* --- Card --- */
@@ -93,7 +95,7 @@ def apply_styles():
         font-size: 16px;
     }
 
-    /* --- AUTO RESPONSIVE (KEY IMPROVEMENT) --- */
+    /* --- AUTO RESPONSIVE --- */
     @media (max-width: 768px) {
         div[data-testid="column"] {
             width: 100% !important;
@@ -110,6 +112,10 @@ def apply_styles():
 
         .prediction {
             font-size: 17px !important;
+        }
+
+        .block-container {
+            padding-top: 4rem !important; /* adjust for smaller screens */
         }
     }
 
@@ -166,7 +172,7 @@ prediction_placeholder.markdown(
 )
 
 # --------------------------------------------------------
-# INPUT FORM (AUTO RESPONSIVE)
+# INPUT FORM
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
@@ -180,7 +186,6 @@ with col2:
     leather = st.selectbox("Leather Interior", ["No", "Yes"])
     mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
 
-# Full width
 cyl = st.number_input("Number of Cylinders", 1, 16, 4)
 
 st.markdown('</div>', unsafe_allow_html=True)
