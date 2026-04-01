@@ -4,7 +4,7 @@ import pickle
 import os
 
 # --------------------------------------------------------
-#  PAGE CONFIG
+#  PAGE CONFIGURATION
 # --------------------------------------------------------
 st.set_page_config(
     page_title="Car Price Prediction System",
@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-#  CUSTOM BACKGROUND IMAGE
+#  BACKGROUND IMAGE
 # --------------------------------------------------------
 def add_bg_from_url():
     st.markdown(
@@ -33,44 +33,80 @@ def add_bg_from_url():
 add_bg_from_url()
 
 # --------------------------------------------------------
-#  CUSTOM UI STYLES
+#  CUSTOM CSS FOR VISIBILITY & READABILITY
 # --------------------------------------------------------
 st.markdown("""
     <style>
 
+        /* ---- Title ---- */
         .title {
             font-size: 42px;
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 2px 2px 4px #000000;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.9);
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
+        /* ---- Subtitle ---- */
         .subtitle {
             font-size: 18px;
-            color: #f5f5f5;
+            color: #e6e6e6;
             text-align: center;
             margin-bottom: 30px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
         }
 
+        /* ---- Glass Card for Form ---- */
         .card {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.35); /* increased opacity */
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 20px rgba(0,0,0,0.4);
-            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0px 6px 28px rgba(0,0,0,0.7);
+            backdrop-filter: blur(14px);
         }
 
+        /* ---- Input Labels ---- */
+        label, .stNumberInput label, .stSelectbox label {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            text-shadow: 2px 2px 5px rgba(0,0,0,1);
+            font-size: 16px !important;
+        }
+
+        /* ---- Input Fields ---- */
+        .stNumberInput input {
+            background-color: rgba(0, 0, 0, 0.65) !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+        }
+
+        /* ---- Selectbox ---- */
+        .stSelectbox div[data-baseweb="select"] {
+            background-color: rgba(0, 0, 0, 0.65) !important;
+            color: white !important;
+            border-radius: 8px !important;
+            padding: 6px !important;
+        }
+
+        /* ---- Dropdown Options ---- */
+        .stSelectbox div[role="listbox"] {
+            background-color: rgba(30, 30, 30, 0.95) !important;
+            color: white !important;
+        }
+
+        /* ---- Prediction Box ---- */
         .prediction-box {
-            background-color: #0d6efd;
-            padding: 20px;
-            border-radius: 10px;
+            background-color: #0069ff;
+            padding: 22px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: white;
-            margin-top: 20px;
+            margin-top: 25px;
+            box-shadow: 0px 6px 25px rgba(0,0,0,0.8);
         }
 
     </style>
@@ -89,7 +125,7 @@ MODEL_PATH = "car_price_model.pkl"
 SCALER_PATH = "scaler.pkl"
 
 if not os.path.exists(MODEL_PATH):
-    st.error("❌ Model file not found. Make sure 'car_price_model.pkl' is uploaded.")
+    st.error("❌ Model file not found. Ensure 'car_price_model.pkl' is in the folder.")
     st.stop()
 
 model = pickle.load(open(MODEL_PATH, "rb"))
@@ -98,10 +134,10 @@ scaler = None
 if os.path.exists(SCALER_PATH):
     scaler = pickle.load(open(SCALER_PATH, "rb"))
 else:
-    st.warning("⚠️ Scaler file not found — predictions may be less accurate.")
+    st.warning("⚠️ Scaler not found. Predictions may be less accurate.")
 
 # --------------------------------------------------------
-#  INPUT FORM (Inside Card)
+#  INPUT FORM (INSIDE GLASS CARD)
 # --------------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
@@ -119,17 +155,18 @@ cylinders = st.number_input("Number of Cylinders", min_value=1, max_value=16, va
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Convert categorical values
+# --------------------------------------------------------
+#  DATA PROCESSING
+# --------------------------------------------------------
 leather_interior = 1 if leather_interior == "Yes" else 0
 
 input_data = np.array([[prod_year, leather_interior, engine_volume, mileage, cylinders]])
 
-# Apply scaling
 if scaler is not None:
     try:
         input_data = scaler.transform(input_data)
     except Exception as e:
-        st.error(f"Scaling error: {e}")
+        st.error(f"Error during scaling: {e}")
         st.stop()
 
 # --------------------------------------------------------
@@ -141,7 +178,7 @@ if st.button("Predict Price ☑️"):
         predicted_price = float(prediction[0])
 
         st.markdown(
-            f'<div class="prediction-box">Estimated Price:<br> GHS {predicted_price:,.2f}</div>',
+            f'<div class="prediction-box">Estimated Price:<br>GHS {predicted_price:,.2f}</div>',
             unsafe_allow_html=True
         )
     except Exception as e:
@@ -152,7 +189,7 @@ if st.button("Predict Price ☑️"):
 # --------------------------------------------------------
 st.markdown("""
     <hr>
-    <div style='text-align:center; color:white; font-size:16px;'>
-        Built by <strong>Victor Kwabena Opare-Addo</strong> • Powered by Streamlit 🚀
+    <div style='text-align:center; color:white; font-size:16px; text-shadow: 2px 2px 5px black;'>
+        Built by <strong>Victor Kwabena Opare‑Addo</strong> • Powered by Streamlit 🚀
     </div>
 """, unsafe_allow_html=True)
