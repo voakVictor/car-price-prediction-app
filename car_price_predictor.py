@@ -107,7 +107,7 @@ def apply_styles():
         }
 
         .subtitle {
-            font-size: 14px !important;
+            font-size: 16px !important;
         }
 
         .prediction {
@@ -140,7 +140,7 @@ into a web interface using Streamlit.
 - Leather Interior  
 - Cylinders  
 
-**Purpose:** Academic Assignment  
+**Institution:** GCTU  
 """)
 
 # --------------------------------------------------------
@@ -227,6 +227,6 @@ if st.button("Predict Price"):
 st.markdown("""
 <hr>
 <center style='color:#94a3b8'>
-Academic Project • Streamlit • Victor Opare-Addo
+Victor Kwabena Opare-Addo • GCTU • 2026
 </center>
 """, unsafe_allow_html=True)
