@@ -13,12 +13,14 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------
-# BACKGROUND IMAGE (safe, direct URL)
+# BACKGROUND + UI STYLING (FULLY RESPONSIVE)
 # --------------------------------------------------------
-def set_bg():
+def apply_styles():
     st.markdown(
         """
         <style>
+
+        /* Global Page Padding Fix */
         .stApp {
             background-image: url("https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg");
             background-size: cover;
@@ -27,91 +29,120 @@ def set_bg():
         }
 
         .block-container {
-            padding-top: 1.2rem !important;
+            padding-top: 2rem !important;
             max-width: 760px !important;
         }
 
-        .title {
-            font-size: 32px;
+        /* Title */
+        .title-text {
+            font-size: 36px;
             font-weight: 900;
-            color: white;
+            color: #ffffff;
             text-align: center;
-            text-shadow: 3px 3px 8px black;
+            margin-bottom: 4px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,1);
         }
 
-        .subtitle {
-            font-size: 15px;
-            color: #ececec;
+        /* Subtitle */
+        .subtitle-text {
+            font-size: 17px;
+            font-weight: 500;
+            color: #f0f0f0;
             text-align: center;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 5px black;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 6px rgba(0,0,0,1);
         }
 
+        /* Prediction box */
         .top-card {
-            background: rgba(13,110,253,0.88);
+            background: rgba(13,110,253,0.92);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 20px;
             color: white;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 18px;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 1rem;
+            box-shadow: 0px 6px 25px rgba(0,0,0,0.9);
+            margin-bottom: 1.2rem;
         }
 
-        .card {
-            background: rgba(0,0,0,0.55);
-            padding: 18px;
+        /* Input card */
+        .input-card {
+            background: rgba(0,0,0,0.60);
+            padding: 20px;
             border-radius: 14px;
+            box-shadow: 0px 6px 25px rgba(0,0,0,0.9);
+            margin-bottom: 1.5rem;
         }
 
+        /* Field labels */
         label {
             color: white !important;
-            font-weight: 600 !important;
-            text-shadow: 2px 2px 5px black;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            text-shadow: 2px 2px 8px black !important;
         }
 
+        /* Input fields */
         .stNumberInput input,
         .stSelectbox div[data-baseweb="select"] {
             background-color: rgba(255,255,255,0.22) !important;
             color: white !important;
             border-radius: 8px !important;
+            border: 1px solid rgba(255,255,255,0.35) !important;
         }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .title-text {
+                font-size: 28px !important;
+            }
+            .subtitle-text {
+                font-size: 14px !important;
+            }
+            .top-card {
+                font-size: 18px !important;
+                padding: 12px !important;
+            }
+        }
+
         </style>
         """,
         unsafe_allow_html=True
     )
 
-set_bg()
+apply_styles()
 
 # --------------------------------------------------------
-# SIDEBAR
+# SIDEBAR INFO
 # --------------------------------------------------------
 st.sidebar.title("ℹ️ App Information")
 st.sidebar.markdown("""
-### Car Price Prediction System  
-This system uses a trained **machine learning model** to estimate car prices based on:
+### 📘 Purpose
+Academic demonstration of a car price prediction system.
 
+### 🔍 Features Used
 - Production Year  
+- Leather Interior  
 - Engine Volume  
 - Mileage  
-- Leather Interior  
-- Number of Cylinders  
+- Cylinders  
 
-### Purpose  
-Built for academic demonstration and learning Streamlit.
+### 🧠 Model
+Trained Linear Regression model.
 
-### Developer  
+### 👨‍💻 Developer
 **Victor Kwabena Opare‑Addo**
 
-### Version  
-1.0 (Clean Academic Edition)
+### 🎓 Version
+Academic Edition 1.0
 """)
 
 # --------------------------------------------------------
 # PAGE HEADER
 # --------------------------------------------------------
-st.markdown('<div class="title">🚗 Car Price Prediction System</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Simple and clean interface for academic demonstration</div>', unsafe_allow_html=True)
+st.markdown('<div class="title-text">🚗 Car Price Prediction System</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle-text">A clean and responsive interface for academic learning</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------------
 # LOAD MODEL & SCALER
@@ -120,48 +151,46 @@ MODEL_PATH = "car_price_model.pkl"
 SCALER_PATH = "scaler.pkl"
 
 if not os.path.exists(MODEL_PATH):
-    st.error("❌ Model file missing! Upload 'car_price_model.pkl'.")
+    st.error("❌ Model file 'car_price_model.pkl' is missing.")
     st.stop()
 
 model = pickle.load(open(MODEL_PATH, "rb"))
 
-scaler = None
-if os.path.exists(SCALER_PATH):
-    scaler = pickle.load(open(SCALER_PATH, "rb"))
+scaler = pickle.load(open(SCALER_PATH, "rb")) if os.path.exists(SCALER_PATH) else None
 
 # --------------------------------------------------------
-# TOP PREDICTION BOX (EMPTY AT START)
+# TOP RESULT PLACEHOLDER
 # --------------------------------------------------------
 prediction_box = st.markdown(
-    '<div class="top-card">Enter details below</div>',
+    '<div class="top-card">Enter details below to generate prediction</div>',
     unsafe_allow_html=True
 )
 
 # --------------------------------------------------------
-# INPUT FORM (SIMPLE & CLEAN)
+# INPUT FORM (RESPONSIVE)
 # --------------------------------------------------------
-st.markdown('<div class="card">', unsafe_allow_html=True)
+st.markdown('<div class="input-card">', unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
 with col1:
-    year = st.number_input("Production Year", 1900, 2026, 2015)
-    engine = st.number_input("Engine Volume (L)", 0.5, 10.0, 2.0, step=0.1)
+    year = st.number_input("Production Year", min_value=1900, max_value=2026, value=2015)
+    engine = st.number_input("Engine Volume (Liters)", min_value=0.5, max_value=10.0, value=2.0, step=0.1)
 
 with col2:
     leather = st.selectbox("Leather Interior", ["No", "Yes"])
-    mileage = st.number_input("Mileage (KM)", 0, 1_000_000, 50000)
+    mileage = st.number_input("Mileage (KM)", min_value=0, max_value=1_000_000, value=50000)
 
-cyl = st.number_input("Cylinders", 1, 16, 4)
+cyl = st.number_input("Number of Cylinders", min_value=1, max_value=16, value=4)
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------------
-# PROCESS DATA
+# PROCESS INPUT
 # --------------------------------------------------------
-leather_num = 1 if leather == "Yes" else 0
+leather_val = 1 if leather == "Yes" else 0
 
-input_data = np.array([[year, leather_num, engine, mileage, cyl]])
+input_data = np.array([[year, leather_val, engine, mileage, cyl]])
 
 if scaler:
     input_data = scaler.transform(input_data)
@@ -170,10 +199,10 @@ if scaler:
 # PREDICT BUTTON
 # --------------------------------------------------------
 if st.button("Predict Price"):
-    price = float(model.predict(input_data)[0])
+    pred = float(model.predict(input_data)[0])
 
     prediction_box.markdown(
-        f'<div class="top-card">Estimated Price: GHS {price:,.2f}</div>',
+        f'<div class="top-card">Estimated Price: GHS {pred:,.2f}</div>',
         unsafe_allow_html=True
     )
 
@@ -181,8 +210,8 @@ if st.button("Predict Price"):
 # FOOTER
 # --------------------------------------------------------
 st.markdown("""
-<hr style="border: 1px solid white;">
+<hr style="border:1px solid white;">
 <div style='text-align:center;color:white;text-shadow:2px 2px 6px black;'>
-Academic Assignment • Built with Streamlit • By <b>Victor Opare‑Addo</b>
+Made for Academic Learning • Streamlit Project • By <b>Victor Opare‑Addo</b>
 </div>
 """, unsafe_allow_html=True)
