@@ -20,7 +20,7 @@ def add_bg_from_url():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
+            background-image: url("https://www.vecteezy.com/photo/37371661-ai-generated-a-red-car-among-grey-cars-marketing-concept-ai-generative");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
